@@ -7,13 +7,13 @@ AST是Abstract Syntax Tree（抽象语法树）的缩写。
 
 按照语法规则书写的代码，是用来让开发者可阅读、可理解的。对编译器等工具来讲，它可以理解的就是抽象语法树了
 ```markdown
-var a = 42
-function addA(d){
+var a = 18
+function sum(d){
   return a + d;
 }
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+查看 [https://astexplorer.net/](https://astexplorer.net/)将源码生成抽象语法树
 
 ### AST是如何产生的？
 
