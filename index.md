@@ -1,13 +1,15 @@
-## Welcome to GitHub Pages
+## 浅谈AST(抽象语法树)
 
 You can use the [editor on GitHub](https://github.com/poz110/poz110.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
 
 Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+### 什么是AST？
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+什么是AST?AST是Abstract Syntax Tree（抽象语法树）的缩写。
+传说中的程序员三大浪漫是编译原理、图形学、操作系统，不把AST玩转，显得逼格不够，而本文目标就是为你揭示AST在现代化JavaScript项目中的应用。
 
+按照语法规则书写的代码，是用来让开发者可阅读、可理解的。对编译器等工具来讲，它可以理解的就是抽象语法树了
 ```markdown
 Syntax highlighted code block
 
