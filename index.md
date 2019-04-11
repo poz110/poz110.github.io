@@ -8,8 +8,8 @@ AST是Abstract Syntax Tree（抽象语法树）的缩写。
 按照语法规则书写的代码，是用来让开发者可阅读、可理解的。对编译器等工具来讲，它可以理解的就是抽象语法树了
 ```markdown
 var a = 18
-function sum(d){
-  return a + d;
+function sum(b){
+  return a + b;
 }
 ```
 
@@ -235,6 +235,18 @@ if (1 > 0) {
 经过这一步的分词，这个数组就比摊开的字符串更方便进行下一步处理了。
 
 #### 语义分析
-### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+语义分析就是把词汇进行立体的组合，确定有多重意义的词语最终是什么意思、多个词语之间有什么关系以及又应该再哪里断句等。
+
+在编程语言解释当中，这就是要最终生成语法树的步骤了。不像自然语言，像“从句”这种结构往往最多只有一层，编程语言的各种从属关系更加复杂。
+
+在编程语言的解析中有两个很相似但是又有区别的重要概念：
+
+- 语句：语句是一个具备边界的代码区域，相邻的两个语句之间从语法上来讲互不干扰，调换顺序虽然可能会影响执行结果，但不会产生语法错误
+比如return true、var a = 10、if (...) {...}
+- 表达式：最终有个结果的一小段代码，它的特点是可以原样嵌入到另一个表达式
+比如myVar、1+1、str.replace('a', 'b')、i < 10 && i > 0等
+很多情况下一个语句可能只包含一个表达式，比如console.log('hi');。estree标准当中，这种语句节点称作ExpressionStatement。
+
+语义分析的过程又是个遍历语法单元的过程，不过相比较而言更复杂，因为分词过程中，每个语法单元都是独立平铺的，而语法分析中，语句和表达式会以树状的结构互相包含。针对这种情况我们可以用栈，也可以用递归来实现。
+
