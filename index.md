@@ -520,5 +520,50 @@ const ast = parse([
  { type: "whitespace", value: "\n" },
 ]);
 ```
+最终得到结果：
+
+```markdown
+{
+  "type": "Program",
+  "body": [
+    {
+      "type": "IfStatement",
+      "test": {
+        "type": "BinaryExpression",
+        "left": {
+          "type": "Literal",
+          "value": 1
+        },
+        "right": {
+          "type": "Literal",
+          "value": 0
+        }
+      },
+      "consequent": {
+        "type": "BlockStatement",
+        "body": [
+          {
+            "type": "ExpressionStatement",
+            "expression": {
+              "type": "CallExpression",
+              "caller": {
+                "type": "Identifier",
+                "value": "alert"
+              },
+              "arguments": [
+                {
+                  "type": "Literal",
+                  "value": "if 1 > 0"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "alternative": null
+    }
+  ]
+}
+```
 
 以上就是语义解析的部分主要思路。注意现在的nextExpression已经颇为复杂，但实际实现要比现在这里展示的要更复杂很多，因为这里根本没有考虑单元运算符、运算优先级等等。
