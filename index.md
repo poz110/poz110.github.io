@@ -15,6 +15,39 @@ function sum(b){
 
 查看 [https://astexplorer.net/](https://astexplorer.net/)将源码生成抽象语法树
 
+你会留意到 AST 的每一层都拥有相同的结构：
+```markdown
+{
+  type: "FunctionDeclaration",
+  id: {...},
+  params: [...],
+  body: {...}
+}
+{
+  type: "Identifier",
+  name: ...
+}
+{
+  type: "BinaryExpression",
+  operator: ...,
+  left: {...},
+  right: {...}
+}
+```
+
+这样的每一层结构也被叫做 节点（Node）。 一个 AST 可以由单一的节点或是成百上千个节点构成。 它们组合在一起可以描述用于静态分析的程序语法。
+
+每一个节点都有如下所示的接口（Interface）：
+```markdown
+interface Node {
+  type: string;
+}
+```
+
+字符串形式的 type 字段表示节点的类型（如： "FunctionDeclaration"，"Identifier"，或 "BinaryExpression"）。 每一种类型的节点定义了一些附加属性用来进一步描述该节点类型。
+
+查看 [AST对象文档](https://developer.mozilla.org/en-US/docs/Mozilla/Projects/SpiderMonkey/Parser_API#Node_objects)
+
 ### AST是如何产生的？
 
 Babel的编译过程跟绝大多数其他语言的编译器大致同理，分为三个阶段：
