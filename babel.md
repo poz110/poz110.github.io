@@ -35,4 +35,7 @@ let result = babel.transform(code, {
     ]
 })
 ```
+#### 生成
+
+利用 babel-generator 将 AST 树输出为转码后的代码字符串
 
