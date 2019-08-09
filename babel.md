@@ -19,17 +19,20 @@ Babel的编译过程跟绝大多数其他语言的编译器大致同理，分为
 ![avatar](/img/babel.png)
 
 #### 解析
-babel解析的过程就是生成抽象语法树的过程，需要经过以下两个阶段：
 
+babel解析的过程就是生成抽象语法树的过程，需要经过以下两个阶段：
 使用 babylon 解析器对输入的源代码字符串进行解析并生成初始 AST（File.prototype.parse）
 利用 babel-traverse 这个独立的包对 AST 进行遍历，并解析出整个树的 path，通过挂载的 metadataVisitor 读取对应的元信息，这一步叫 set AST 过程
 
+#### 转换
 
-#### 分词
-
+transform 过程：遍历 AST 树并应用各 transformers（plugin） 生成变换后的 AST 树
+babel 中最核心的是 babel-core，它向外暴露出 babel.transform 接口。
 ```markdown
-if (1 > 0) {
-  alert("if \"1 > 0\"");
-}
+let result = babel.transform(code, {
+    plugins: [
+        arrayPlugin
+    ]
+})
 ```
 
