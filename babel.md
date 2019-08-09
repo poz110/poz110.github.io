@@ -265,11 +265,11 @@ let visitor = {
     ArrowFunctionExpression(path) { //定义需要转换的节点,这里拦截箭头函数
         let { id, params, body, generator, async } = path.node;
         //箭头函数我们会简写{return a+b} 为 a+b    
-        if (!t.isBlockStatement(body)) {    
-          const node = t.returnStatement(body);
-          body = t.blockStatement([node]);
+        if (!types.isBlockStatement(body)) {    
+          const node = types.returnStatement(body);
+          body = types.blockStatement([node]);
         }
-        path.replaceWith(t.functionExpression(id, params, body, generator, async));
+        path.replaceWith(types.functionExpression(id, params, body, generator, async));
       }
     }
 }
