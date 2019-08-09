@@ -16,7 +16,7 @@ Babel的编译过程跟绝大多数其他语言的编译器大致同理，分为
 - 生成：根据变换后的抽象语法树再生成代码字符串
 
 具体工作流程如下图所示：
-![avatar](https://user-gold-cdn.xitu.io/2018/11/11/167019b7916707b1?imageView2/0/w/1280/h/960/format/webp/ignore-error/1)
+![avatar](/img/babel.png)
 
 #### 解析
 babel解析的过程就是生成抽象语法树的过程，需要经过以下两个阶段：
