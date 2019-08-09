@@ -94,7 +94,9 @@ console.log(ast);
 transform 过程：遍历 AST 树并应用各 transformers（plugin） 生成变换后的 AST 树
 babel 中最核心的是 babel-core，它向外暴露出 babel.transform 接口。
 
-`const add = (a, b) => a + b` =>  `var add = function(a, b) => { return a + b }`
+`const add = (a, b) => a + b` =>  
+
+`var add = function(a, b) => { return a + b }`
 
 ```markdown
 {
