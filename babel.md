@@ -282,7 +282,134 @@ let result = babel.transform(code, {
 console.log(result.code)
 
 ```
+到这里大家就明白了,我们转换代码的关键就是根据当前的抽象语法树,以我们定义的规则生成新的抽象语法树,转换的过程就是生成新抽象语法树的过程。
+
+遍历抽象语法树(简单实现遍历器traverser)
+
+```markdown
+const traverser = (ast, visitor) => {
+
+    // 如果节点是数组那么遍历数组
+    const traverseArray = (array, parent) => {
+        array.forEach((child) => {
+            traverseNode(child, parent);
+        });
+    };
+
+    // 遍历 ast 节点
+    const traverseNode = (node, parent) => {
+        const method = visitor[node.type];
+
+        if (method) {
+            method(node, parent);
+        }
+
+        switch (node.type) {
+        case 'Program':
+            traverseArray(node.body, node);
+            break;
+
+        case 'VariableDeclaration':
+            traverseArray(node.init.params, node.init);
+            break;
+
+        case 'identifier':
+            break;
+
+        default:
+            throw new TypeError(node.type);
+        }
+    };
+    traverseNode(ast, null);
+};
+
+```
+
+转换代码(简单实现转换器transformer)
+
+```markdown
+const transformer = (ast, visitor) => {
+
+    // 新 ast
+    const newAst = {
+        type: 'Program',
+        body: []
+    };
+
+    // 在老 ast 上加一个指针指向新 ast
+    ast._context = newAst.body;
+
+    traverser(ast, visitor);
+
+    return newAst;
+};
+
+
+```
 #### 生成
 
 利用 babel-generator 将 AST 树输出为转码后的代码字符串
 
+生成代码(简单实现生成器generator)
+
+
+```markdown
+const generator = (node) => {
+    switch (node.type) {
+    // 如果是 `Program` 结点，那么我们会遍历它的 `body` 属性中的每一个结点，并且递归地
+    // 对这些结点再次调用 codeGenerator，再把结果打印进入新的一行中。
+    case 'Program':
+        return node.body.map(generator)
+            .join('\n');
+
+    // 如果是FunctionDeclaration我们分别遍历调用其参数数组以及调用其 body 的属性
+    case 'FunctionDeclaration':
+        return 'function' + ' ' + node.identifierName + '(' + node.params.map(generator) + ')' + ' ' + generator(node.body);
+
+    // 对于 `Identifiers` 我们只是返回 `node` 的 identifierName
+    case 'identifier':
+        return node.identifierName;
+
+    // 如果是BlockStatement我们遍历调用其body数组
+    case 'BlockStatement':
+        return '{' + node.body.map(generator) + '}';
+
+    // 如果是ReturnStatement我们调用其 argument 的属性
+    case 'ReturnStatement':
+        return 'return' + ' ' + generator(node.argument);
+    
+    // 如果是ReturnStatement我们调用其左右节点并拼接
+    case 'BinaryExpression':
+        return generator(node.left) + ' ' + node.operator + ' ' + generator(node.right);
+
+    // 没有符合的则报错
+    default:
+        throw new TypeError(node.type);
+
+    }
+};
+
+```
+
+### 总结
+
+至此，我们完成了一个简陋的微型 babel
+
+```markdown
+const compiler = (input) => {
+    const tokens = tokenizer(input);
+    const ast =  parser(tokens);
+    const newAst = transformer(ast);
+    const output = generator(newAst);
+
+    return output;
+};
+
+const str = 'const add = (a, b) => a + b';
+
+const result = compiler(str);
+
+console.log(result);
+// function add(a,b) {return a + b}
+
+```
