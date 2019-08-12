@@ -25,8 +25,7 @@ babel解析的过程就是生成抽象语法树的过程，需要经过以下两
 
 Parse 阶段可以细分为两个阶段：词法分析（Lexical Analysis, LA）和语法分析
 
-词法分析: 将代码(字符串)分割为token流,即语法单元成的数组
-语法分析: 分析token流(上面生成的数组)并生成 AST
+词法分析: 将代码(字符串)分割为token流,即语法单元成的数组；语法分析: 分析token流(上面生成的数组)并生成 AST
 
 可前往 [https://astexplorer.net/](https://astexplorer.net/)将源码生成AST
 
