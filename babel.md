@@ -28,6 +28,8 @@ Parse 阶段可以细分为两个阶段：词法分析（Lexical Analysis, LA）
 词法分析: 将代码(字符串)分割为token流,即语法单元成的数组
 语法分析: 分析token流(上面生成的数组)并生成 AST
 
+可前往 [https://astexplorer.net/](https://astexplorer.net/)将源码生成AST
+
 ```markdown
 const tokens = tokenize('const add = (a, b) => a + b')；
 console.log(tokens);
@@ -401,7 +403,6 @@ const compiler = (input) => {
     const ast =  parser(tokens);
     const newAst = transformer(ast);
     const output = generator(newAst);
-
     return output;
 };
 
