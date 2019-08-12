@@ -29,7 +29,7 @@ Parse 阶段可以细分为两个阶段：词法分析（Lexical Analysis, LA）
 
 可前往 [https://astexplorer.net/](https://astexplorer.net/)将源码生成AST
 
-```markdown
+```js
 const tokens = tokenize('const add = (a, b) => a + b')；
 console.log(tokens);
 
@@ -132,7 +132,7 @@ babel 中最核心的是 babel-core，它向外暴露出 babel.transform 接口�
 
 `var add = function(a, b) => { return a + b }`
 
-```markdown
+```js
 {
   "type": "Program",
   "start": 0,
@@ -202,7 +202,7 @@ babel 中最核心的是 babel-core，它向外暴露出 babel.transform 接口�
 }
 ```
 
-```markdown
+```js
 {
   "type": "Program",
   "start": 0,
@@ -284,7 +284,7 @@ babel 中最核心的是 babel-core，它向外暴露出 babel.transform 接口�
 }
 ```
 
-```markdown
+```js
 //babel核心库，用来实现核心的转换引擎
 let babel = require('babel-core');
 //可以实现类型判断，生成AST节点
@@ -320,7 +320,7 @@ console.log(result.code)
 
 遍历抽象语法树(简单实现遍历器traverser)
 
-```markdown
+```js
 const traverser = (ast, visitor) => {
 
     // 如果节点是数组那么遍历数组
@@ -361,7 +361,7 @@ const traverser = (ast, visitor) => {
 
 转换代码(简单实现转换器transformer)
 
-```markdown
+```js
 const transformer = (ast, visitor) => {
 
     // 新 ast
@@ -387,7 +387,7 @@ const transformer = (ast, visitor) => {
 生成代码(简单实现生成器generator)
 
 
-```markdown
+```js
 const generator = (node) => {
     switch (node.type) {
     // 如果是 `Program` 结点，那么我们会遍历它的 `body` 属性中的每一个结点，并且递归地
@@ -429,7 +429,7 @@ const generator = (node) => {
 
 至此，我们完成了一个简陋的微型 babel
 
-```markdown
+```js
 const compiler = (input) => {
     const tokens = tokenizer(input);
     const ast =  parser(tokens);
