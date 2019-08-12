@@ -52,38 +52,71 @@ const ast = parser(tokens)；
 console.log(ast);
 
 {
-    "type": "Program",
-    "body": [
+  "type": "Program",
+  "start": 0,
+  "end": 28,
+  "body": [
+    {
+      "type": "VariableDeclaration",
+      "start": 0,
+      "end": 27,
+      "declarations": [
         {
-            "type": "VariableDeclaration",
-            "identifierName": "add",
-            "init": {
-                "type": "ArrowFunctionExpression",
-                "params": [
-                    {
-                        "type": "identifier",
-                        "identifierName": "a"
-                    },
-                    {
-                        "type": "identifier",
-                        "identifierName": "b"
-                    }
-                ],
-                "body": {
-                    "type": "BinaryExpression",
-                    "left": {
-                        "type": "identifier",
-                        "identifierName": "a"
-                    },
-                    "operator": "+",
-                    "right": {
-                        "type": "identifier",
-                        "identifierName": "b"
-                    }
-                }
+          "type": "VariableDeclarator",
+          "start": 6,
+          "end": 27,
+          "id": {
+            "type": "Identifier",
+            "start": 6,
+            "end": 9,
+            "name": "add"
+          },
+          "init": {
+            "type": "ArrowFunctionExpression",
+            "start": 12,
+            "end": 27,
+            "id": null,
+            "expression": true,
+            "generator": false,
+            "params": [
+              {
+                "type": "Identifier",
+                "start": 13,
+                "end": 14,
+                "name": "a"
+              },
+              {
+                "type": "Identifier",
+                "start": 16,
+                "end": 17,
+                "name": "b"
+              }
+            ],
+            "body": {
+              "type": "BinaryExpression",
+              "start": 22,
+              "end": 27,
+              "left": {
+                "type": "Identifier",
+                "start": 22,
+                "end": 23,
+                "name": "a"
+              },
+              "operator": "+",
+              "right": {
+                "type": "Identifier",
+                "start": 26,
+                "end": 27,
+                "name": "b"
+              }
             }
+          }
         }
-    ]
+      ],
+      "kind": "const"
+    }
+  ],
+  "sourceType": "module"
 }
 
 ```
@@ -92,7 +125,7 @@ console.log(ast);
 在 Babel 中我们使用者最常使用的地方就是代码转换,大家常用的 Babel 插件就是定义代码转换规则而生的。
 这一步做的事情就是操作 AST，可以增删改这些节点，从而转换成实际需要的 AST。
 
-transform 过程：遍历 AST 树并应用各 transformers（plugin） 生成变换后的 AST 树
+transform 过程：遍历 AST 树并应用各 transformers（plugin） 生成变换后的 AST 树。
 babel 中最核心的是 babel-core，它向外暴露出 babel.transform 接口。
 
 `const add = (a, b) => a + b` =>  
