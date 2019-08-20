@@ -6,7 +6,7 @@ AST是Abstract Syntax Tree（抽象语法树）的缩写。
 在计算机科学中，抽象语法树（AST）或语法树是用编程语言编写的源代码的抽象语法结构的树表示。树的每个节点表示在源代码中出现的构造。语法是“抽象的”，因为它不代表真实语法中出现的每个细节，而只是结构，内容相关的细节。
 
 按照语法规则书写的代码，是用来让开发者可阅读、可理解的。对编译器等工具来讲，它可以理解的就是抽象语法树了。
-```markdown
+```js
 var a = 18
 function sum(b){
   return a + b;
@@ -16,7 +16,7 @@ function sum(b){
 查看 [https://astexplorer.net/](https://astexplorer.net/)将源码生成抽象语法树
 
 你会留意到 AST 的每一层都拥有相同的结构：
-```markdown
+```js
 {
   type: "FunctionDeclaration",
   id: {...},
@@ -38,7 +38,7 @@ function sum(b){
 这样的每一层结构也被叫做 节点（Node）。 一个 AST 可以由单一的节点或是成百上千个节点构成。 它们组合在一起可以描述用于静态分析的程序语法。
 
 每一个节点都有如下所示的接口（Interface）：
-```markdown
+```js
 interface Node {
   type: string;
 }
@@ -76,14 +76,14 @@ babel解析的过程就是生成抽象语法树的过程，需要经过以下两
 
 分词的过过程从逻辑来讲并不难解释，但是这是个精细活，要考虑清楚所有的情况。还是以一个代码为例：
 
-```markdown
+```js
 if (1 > 0) {
   alert("if \"1 > 0\"");
 }
 ```
 我们希望得到的分词是：
 
-```markdown
+```js
 'if'     ' '       '('    '1'      ' '    '>'    ' '    ')'    ' '    '{'
 '\n  '   'alert'   '('    '"if \"1 > 0\""'    ')'    ';'    '\n'   '}'
 ```
@@ -91,7 +91,7 @@ if (1 > 0) {
 
 这拆分过程其实没啥可取巧的，就是简单粗暴地一个字符一个字符地遍历，然后分情况讨论，整个实现方法就是顺序遍历和大量的条件判断。我用一个简单的实现来解释，在关键的地方注释，我们只考虑上面那段代码里存在的语法单元类型。
 
-```markdown
+```js
 function tokenizeCode (code) {
   const tokens = [];    // 结果数组
   for (let i = 0; i < code.length; i++) {
@@ -247,7 +247,7 @@ if (1 > 0) {
 ```
 
 执行结果如下：
-```markdown
+```js
 [
  { type: "whitespace", value: "\n" },
  { type: "identifier", value: "if" },
@@ -291,7 +291,7 @@ if (1 > 0) {
 语义分析的过程又是个遍历语法单元的过程，不过相比较而言更复杂，因为分词过程中，每个语法单元都是独立平铺的，而语法分析中，语句和表达式会以树状的结构互相包含。针对这种情况我们可以用栈，也可以用递归来实现。
 
 以下是语义分析的伪代码：
-```markdown
+```js
 function parse (tokens) {
   let i = -1;     // 用于标识当前遍历位置
   let curToken;   // 用于记录当前符号
@@ -522,7 +522,7 @@ const ast = parse([
 ```
 最终得到结果：
 
-```markdown
+```js
 {
   "type": "Program",
   "body": [
